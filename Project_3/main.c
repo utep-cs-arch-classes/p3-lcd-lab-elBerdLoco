@@ -4,6 +4,7 @@
 #include "lcddraw.h"
 #include "draw_shapes.h"
 #include "switches.h"
+#include "libTimer.h"  /* This was added for buzzer */
 
 // WARNING: LCD DISPLAY USES P1.0.  Do not touch!!! 
 
@@ -15,6 +16,9 @@ void main()
   configureClocks();
   lcd_init();
   switch_init();
+
+  // buzzer_init();             /* added for buzzer */
+  // buzzer_set_period(1000);   /* added for buzzer */
   
   enableWDTInterrupts();      /**< enable periodic interrupt */
   or_sr(0x8);	              /**< GIE (enable interrupts) */

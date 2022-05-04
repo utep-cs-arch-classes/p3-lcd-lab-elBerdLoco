@@ -1,5 +1,6 @@
 # makefile configuration
-COMMON_OBJECTS		= wdt_handler.o p2_interrupt_handler.o draw_shapes.o switches.o wdt_c_handler.o
+COMMON_OBJECTS		= wdt_handler.o p2_interrupt_handler.o draw_shapes.o switches.o wdt_c_handler.o buzzer.o ../lib/libTimer.a
+
 CPU             	= msp430g2553
 CFLAGS          	= -mmcu=${CPU} -Os -I../h
 LDFLAGS		= -L../lib -L/opt/ti/msp430_gcc/include/ 

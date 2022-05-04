@@ -20,9 +20,17 @@ update_shape(void)
   
   //if (switches & SW4) return;
   if (step <= 60) {
+    buzzer_init();
+    buzzer_set_period(1000);
+    
     // a color in this BGR encoding is BBBB BGGG GGGR RRRR
     unsigned int color = (blue << 11) | (green << 5) | red;
-    
+    if(step < 10) {
+      buzzer_set_period(1000);
+    }
+    if(step > 30) {
+      buzzer_init();
+    }
     fillRectangle(15, 40+nameCounter, 10, 10, color);  //middle of T
     fillRectangle(40, 40+nameCounter, 10, 10, color);  //left side of o
     fillRectangle(60, 40+nameCounter, 10, 10, color);  //right side of o
@@ -42,6 +50,8 @@ update_shape(void)
     }
     step++;
     if (switch1_down) {         //CAP A
+      // buzzer_init();
+      // buzzer_set_period(1000);
       green = (green + 3) % 37;
       fillRectangle(0 + (step)*(2), 90, 40 + (step)*(2), 20 + step, color);
       if (switch2_down) {            //CAP B
@@ -60,24 +70,27 @@ update_shape(void)
 	drawString5x7(20, 10, "This is GREEN", COLOR_RED, COLOR_GREEN);
       }
     }
-    else if (switch2_down) {
+    else if (switch2_down) {         //CAP A
+      // buzzer_set_period(1500);
       blue = (blue + 2) % 27;
       if(step <= 60){
 	fillRectangle(step, 150 - step, 1 + step , 1, color);
       }
-      if(switch3_down) {
+      if(switch3_down) {             //CAP B
 	clearScreen(COLOR_BLUE);
 	 step = 0;
 	drawString5x7(20, 10, "This is BLUE", COLOR_RED, COLOR_BLUE);
       }
     }
-    else if(switch3_down) { 
+    else if(switch3_down) {          //CAP A
       red = (red - 3) % 17;
+      // buzzer_set_period(2000);
       if(step <= 60){
 	fillRectangle(60, 150 - step, 1 + step, 1, color);
       } 
     }
-    else if(switch4_down) {
+    else if(switch4_down) {          //CAP A
+      // buzzer_set_period(3000);
       if(step == 0 ){
 	fillRectangle(9 + nameCounter, 9, 60, 20, COLOR_BLACK);
 	fillRectangle(60, 9, 60, 20, COLOR_BLACK);

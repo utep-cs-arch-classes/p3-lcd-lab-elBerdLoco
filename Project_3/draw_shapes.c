@@ -85,6 +85,10 @@ update_shape(void)
     else if(switch3_down) {          //CAP A
       red = (red - 3) % 17;
       buzzer_set_period(songCounter);
+      currentX = 100 - currentHeight;
+      currentHeight--;
+      
+      fillRectangle(currentX, currentY, currentWidth, currentHeight, color);
       if(switch4_down){
 	drawString5x7(75, 0, "SURPRISE!!!", COLOR_PURPLE, color);
       } 
@@ -96,6 +100,10 @@ update_shape(void)
   }else {
     step = 0;
     bounce2 = 0;
+    currentX = 0;
+    currentY = 0;
+    currentWidth = 0;
+    currentHeight = 0;
   }
 }
 

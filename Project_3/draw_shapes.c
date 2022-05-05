@@ -22,7 +22,11 @@ update_shape(void)
   static unsigned char currentY = 0;
   static unsigned char currentWidth = 0;
   static unsigned char currentHeight = 0;
-  static unsigned int background = 0; 
+  static unsigned int background = 0;
+  static unsigned char state = 0;
+
+
+  
   
   //if (switches & SW4) return;
   if (step <= 60) {
@@ -49,54 +53,50 @@ update_shape(void)
       nameCounter = 0;
     }
     step++;
-    if (switch1_down) {         //CAP A
+
+    if (switch1_down){
       buzzer_set_period(songCounter);
+      drawString5x7(5, 125, "RADICAL", COLOR_RED, color);
+      state = 1;
+    }
+    if (switch2_down){
+      buzzer_set_period(songCounter + step*100);
+      drawString5x7(30, 100, "GROOVY", COLOR_GREEN, color);
+      state = 2;
+    }
+    if (switch3_down){
+      buzzer_set_period(songCounter + step*300);
+      drawString5x7(100, 75, "COOL", COLOR_BLUE, color);
+      state = 3;
+    }
+    if (switch4_down){
+      state = 4;
+    }
+
+    switch (state){
+    case 1:
+      fillRectangle(0 + (step)*(2), 70, (step)*(2), 20 + step, color);
       green = (green + 3) % 37;
-      currentX = 0 + (step)*(2);
-      currentY = 70;
-      currentWidth = (step)*(2);
-      currentHeight = 20 + step;
-      fillRectangle(currentX, currentY, currentWidth, currentHeight, color);
+      break;
+    case 2:
       
-      if (switch2_down) {            //CAP B
-	
-	drawString5x7(5, 75, "RADICAL", COLOR_GREEN, color);
-        
-      }
-      else if (switch3_down) {       //CAP B
-	step = 0; 
-	drawString5x7(20, 100, "GROOVY", COLOR_BLUE, color);
-      }
-    }
-    else if (switch2_down) {         //CAP A
-      buzzer_set_period(songCounter);
+      fillRectangle(75, 160 - step, 5 + step, 5, color);
       blue = (blue + 2) % 27;
-      currentX = step;
-      currentY = 150 - step;
-      fillRectangle(currentX, currentY, currentWidth, currentHeight, color);
-      
-      if(switch3_down) {             //CAP B 
-	drawString5x7(5, 140, "NICE", COLOR_RED, color);
-      }
-      if(switch4_down) {
-	drawString5x7(50, 120, "NEATO REANO", COLOR_RED, color);
-      }
-    }
-    else if(switch3_down) {          //CAP A
+      break;
+    case 3:
+      currentX += 1;
+      currentY += 2;
+      fillRectangle(75 - currentX, 140 - currentX, 1, 1 + currentY, color);
       red = (red - 3) % 17;
-      buzzer_set_period(songCounter);
-      currentX = 100 - currentHeight;
-      currentHeight--;
-      
-      fillRectangle(currentX, currentY, currentWidth, currentHeight, color);
-      if(switch4_down){
-	drawString5x7(75, 0, "SURPRISE!!!", COLOR_PURPLE, color);
-      } 
-    }
-    else if(switch4_down) {          //CAP A
-      buzzer_set_period(songCounter);
+      break;
+    case 4:
       clearScreen(color);
+      break;
+    default:
+      buzzer_init();
+      break;
     }
+
   }else {
     step = 0;
     bounce2 = 0;

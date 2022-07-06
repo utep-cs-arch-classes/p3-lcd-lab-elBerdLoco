@@ -1,5 +1,7 @@
 # makefile configuration
-COMMON_OBJECTS		= wdt_handler.o p2_interrupt_handler.o draw_shapes.o switches.o wdt_c_handler.o buzzer.o ../lib/libTimer.a
+COMMON_OBJECTS		= wdt_handler.o p2_interrupt_handler.o Tetris.o switches.o wdt_c_handler.o buzzer.o ../lib/libTimer.a
+
+
 
 CPU             	= msp430g2553
 CFLAGS          	= -mmcu=${CPU} -Os -I../h
@@ -19,4 +21,4 @@ load: main.elf
 	msp430loader.sh $^
 
 clean:
-	rm -f *.o *.elf
+	rm -f *.o *.elf 
